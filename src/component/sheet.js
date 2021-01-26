@@ -724,13 +724,13 @@ function sheetInitEvents() {
           break;
         case 67:
           // ctrl + c
-          copy.call(this);
-          evt.preventDefault();
+          //copy.call(this);
+          //evt.preventDefault();
           break;
         case 88:
           // ctrl + x
-          cut.call(this);
-          evt.preventDefault();
+          //cut.call(this);
+          //evt.preventDefault();
           break;
         case 85:
           // ctrl + u
