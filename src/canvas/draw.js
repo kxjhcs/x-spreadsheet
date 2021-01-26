@@ -194,7 +194,35 @@ class Draw {
   }
 
   fillText(text, x, y) {
-    this.ctx.fillText(text, npx(x), npx(y));
+    if (typeof (text) == "string") {
+      var pos = text.indexOf("##trenD##");
+      if (-1 == pos) {
+        this.ctx.fillText(text, npx(x), npx(y));
+      } else {
+        var trendsStr = text.substr("##trenD##".length);
+        try {
+          var trends = JSON.parse(trendsStr);
+          var total = 0;
+          for (var i = 0; i < trends.length; i++) {
+            total += trends[i];
+          }
+          this.ctx.save();
+          this.ctx.beginPath();
+          var width = 30, height = 20;
+          for (var i = 0; i < trends.length - 1; i++) {
+            this.ctx.fillRect(x + i * width, y + 10 - height * trends[i] / total, 2, 2);
+            this.ctx.moveTo(npx(x + i * width), npx(y + 10 - height * trends[i] / total));
+            this.ctx.lineTo(npx(x + (i + 1) * width), npx(y + 10 - height * trends[i + 1] / total));
+          }
+          this.ctx.stroke();
+          this.ctx.restore();
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    } else {
+      this.ctx.fillText(text, npx(x), npx(y));
+    }
     return this;
   }
 
